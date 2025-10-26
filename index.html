@@ -1,58 +1,315 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8" />
-    <title>GymSup</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício de Display CSS</title>
 </head>
 <body>
-
-    <header>
-        <h1>GymSup</h1>
-        <h3>Solução Inteligente</h3>
-        <nav>
-            <ul>
-                <li><a href="#quem-somos">Quem Somos</a></li>
-                <li><a href="#artigos">Artigos</a></li>
-                <li><a href="#">Sua Conta</a></li>
-                <li><a href="#contato">Contatos</a></li>
-            </ul>
-        </nav>
+    <header class="header">
+        <h1>Meu Site Portfólio</h1>
+        <p>Demonstração de diferentes tipos de display CSS</p>
     </header>
 
-    <main>
-        <section id="quem-somos">
-            <article>
-                <h3>Quem Somos</h3>
-                <p>
-                    Somos apaixonados por saúde, performance e bem-estar. Nosso objetivo é descomplicar o mundo da suplementação, oferecendo informações claras, confiáveis e atualizadas para quem busca melhorar seus resultados — seja na academia, no esporte ou no dia a dia.
-                </p>
-                <p>
-                    Neste site, você encontrará dicas práticas, análises de suplementos, comparativos, orientações sobre uso seguro e muito mais. Reunimos conhecimento científico, experiência prática e curiosidade para ajudar você a fazer escolhas mais conscientes e eficazes.
-                </p>
-                <p>
-                    Não vendemos suplementos. Nosso compromisso é com a informação de qualidade, baseada em evidências, sempre respeitando a individualidade de cada pessoa.
-                </p>
-                <p>
-                    Se você quer entender melhor o que está tomando (ou pretende tomar), está no lugar certo. Bem-vindo à sua fonte confiável sobre suplementação!
-                </p>
-            </article>
-        </section>
+    <nav class="navigation">
+        <a href="#" class="nav-button">Home</a>
+        <a href="#" class="nav-button">Sobre</a>
+        <a href="#" class="nav-button">Projetos</a>
+        <a href="#" class="nav-button">Galeria</a>
+        <a href="#" class="nav-button">Contato</a>
+    </nav>
 
-        <section id="artigos">
-            <article>
-                <h3>Artigos</h3>
-                <h4>Qual o melhor horário para tomar minha suplementação?</h4>
-                <p>
-                    O momento ideal para suplementar depende do tipo de suplemento e do seu objetivo. Por exemplo, proteínas como o whey são frequentemente consumidas após o treino, enquanto creatina pode ser tomada antes ou depois, de acordo com sua rotina.
-                </p>
-                <img src="suplementos.jpg" alt="Consumo de suplemento" />
-            </article>
-        </section>
-    </main>
+    <div class="main-container">
+        <aside class="sidebar">
+            <h2>Menu Lateral</h2>
+            <div class="sidebar-item">
+                <span class="icon">📱</span>
+                <span class="text">Responsivo</span>
+            </div>
+            <div class="sidebar-item">
+                <span class="icon">🎨</span>
+                <span class="text">Design Moderno</span>
+            </div>
+            <div class="sidebar-item">
+                <span class="icon">⚡</span>
+                <span class="text">Performance</span>
+            </div>
+            <div class="sidebar-item">
+                <span class="icon">🔒</span>
+                <span class="text">Segurança</span>
+            </div>
+        </aside>
 
-    <footer id="contato">
-        Acesse nosso Instagram: <a href="https://instagram.com/gymsup" target="_blank">@gymsup</a>
+        <main class="content">
+            <section class="intro">
+                <h2>Bem-vindo!</h2>
+                <p>Este layout demonstra o uso de diferentes propriedades de display em CSS: block, inline-block, flex e grid.</p>
+            </section>
+
+            <section class="gallery-section">
+                <h2>Galeria de Imagens (Grid 3 colunas)</h2>
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <div class="image-placeholder" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            <span>Imagem 1</span>
+                        </div>
+                        <p>Projeto Alpha</p>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="image-placeholder" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                            <span>Imagem 2</span>
+                        </div>
+                        <p>Projeto Beta</p>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="image-placeholder" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                            <span>Imagem 3</span>
+                        </div>
+                        <p>Projeto Gamma</p>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="image-placeholder" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                            <span>Imagem 4</span>
+                        </div>
+                        <p>Projeto Delta</p>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="image-placeholder" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                            <span>Imagem 5</span>
+                        </div>
+                        <p>Projeto Epsilon</p>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="image-placeholder" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">
+                            <span>Imagem 6</span>
+                        </div>
+                        <p>Projeto Zeta</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 - Exercício de CSS Display Properties</p>
     </footer>
 
+    <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f5f5f5;
+}
+
+.header {
+    display: block;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 40px 20px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+.header p {
+    font-size: 1.1em;
+    opacity: 0.9;
+}
+
+.navigation {
+    display: block;
+    background-color: #2c3e50;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.nav-button {
+    display: inline-block;
+    padding: 12px 25px;
+    margin: 5px;
+    background-color: #34495e;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.nav-button:hover {
+    background-color: #667eea;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.main-container {
+    display: flex;
+    max-width: 1400px;
+    margin: 30px auto;
+    gap: 20px;
+    padding: 0 20px;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    background-color: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    height: fit-content;
+}
+
+.sidebar h2 {
+    margin-bottom: 20px;
+    color: #2c3e50;
+    font-size: 1.5em;
+}
+
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 10px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.sidebar-item:hover {
+    background-color: #667eea;
+    color: white;
+    transform: translateX(5px);
+}
+
+.sidebar-item .icon {
+    font-size: 1.5em;
+    margin-right: 15px;
+}
+
+.sidebar-item .text {
+    font-weight: 500;
+}
+
+.content {
+    flex: 1;
+}
+
+.intro {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.intro h2 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+}
+
+.intro p {
+    color: #555;
+    font-size: 1.1em;
+}
+
+.gallery-section {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.gallery-section h2 {
+    color: #2c3e50;
+    margin-bottom: 25px;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.gallery-item {
+    text-align: center;
+}
+
+.image-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 200px;
+    border-radius: 10px;
+    color: white;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.image-placeholder:hover {
+    transform: scale(1.05);
+}
+
+.gallery-item p {
+    color: #555;
+    font-weight: 500;
+}
+
+.footer {
+    display: block;
+    background-color: #2c3e50;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 30px;
+}
+
+@media (max-width: 968px) {
+    .main-container {
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        width: 100%;
+    }
+    
+    .gallery {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .gallery {
+        grid-template-columns: 1fr;
+    }
+    
+    .nav-button {
+        display: block;
+        margin: 5px auto;
+        max-width: 200px;
+    }
+    
+    .header h1 {
+        font-size: 1.8em;
+    }
+}
+    </style>
 </body>
 </html>
