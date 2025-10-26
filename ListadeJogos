@@ -1,0 +1,258 @@
+import React, { useState, useEffect } from 'react';
+import { Gamepad2, Plus, Trash2, Check, X } from 'lucide-react';
+
+export default function GameTracker() {
+  const [games, setGames] = useState([]);
+  const [gameName, setGameName] = useState('');
+  const [platform, setPlatform] = useState('PC');
+  const [filter, setFilter] = useState('all');
+
+  useEffect(() => {
+    loadGames();
+  }, []);
+
+  useEffect(() => {
+    if (games.length > 0) {
+      saveGames();
+    }
+  }, [games]);
+
+  const loadGames = async () => {
+    try {
+      const result = await window.storage.get('games-list');
+      if (result && result.value) {
+        setGames(JSON.parse(result.value));
+      }
+    } catch (error) {
+      console.log('Nenhum dado salvo ainda');
+    }
+  };
+
+  const saveGames = async () => {
+    try {
+      await window.storage.set('games-list', JSON.stringify(games));
+    } catch (error) {
+      console.error('Erro ao salvar:', error);
+    }
+  };
+
+  const addGame = () => {
+    if (gameName.trim() === '') return;
+
+    const newGame = {
+      id: Date.now(),
+      name: gameName,
+      platform: platform,
+      completed: false,
+      addedAt: new Date().toLocaleDateString('pt-BR')
+    };
+
+    setGames([...games, newGame]);
+    setGameName('');
+  };
+
+  const toggleComplete = (id) => {
+    setGames(games.map(game =>
+      game.id === id ? { ...game, completed: !game.completed } : game
+    ));
+  };
+
+  const removeGame = (id) => {
+    setGames(games.filter(game => game.id !== id));
+  };
+
+  const clearAll = async () => {
+    if (window.confirm('Tem certeza que deseja limpar toda a lista?')) {
+      setGames([]);
+      try {
+        await window.storage.delete('games-list');
+      } catch (error) {
+        console.error('Erro ao limpar:', error);
+      }
+    }
+  };
+
+  const filteredGames = games.filter(game => {
+    if (filter === 'completed') return game.completed;
+    if (filter === 'pending') return !game.completed;
+    return true;
+  });
+
+  const stats = {
+    total: games.length,
+    completed: games.filter(g => g.completed).length,
+    pending: games.filter(g => !g.completed).length
+  };
+
+  const platforms = ['PC', 'PlayStation', 'Xbox', 'Nintendo', 'Mobile'];
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 p-4">
+      <div className="max-w-4xl mx-auto">
+        {/* Header */}
+        <div className="bg-gradient-to-r from-purple-600 to-blue-600 rounded-t-2xl p-6 shadow-2xl">
+          <div className="flex items-center justify-center gap-3 mb-2">
+            <Gamepad2 className="w-10 h-10 text-white" />
+            <h1 className="text-4xl font-bold text-white">Game Tracker</h1>
+          </div>
+          <p className="text-center text-purple-100">Gerencie sua coleção de jogos</p>
+        </div>
+
+        <div className="grid grid-cols-3 gap-4 p-4 bg-gray-900 bg-opacity-50">
+          <div className="bg-blue-600 bg-opacity-30 backdrop-blur-sm rounded-lg p-4 text-center border border-blue-400">
+            <div className="text-3xl font-bold text-white">{stats.total}</div>
+            <div className="text-blue-200 text-sm">Total</div>
+          </div>
+          <div className="bg-green-600 bg-opacity-30 backdrop-blur-sm rounded-lg p-4 text-center border border-green-400">
+            <div className="text-3xl font-bold text-white">{stats.completed}</div>
+            <div className="text-green-200 text-sm">Finalizados</div>
+          </div>
+          <div className="bg-orange-600 bg-opacity-30 backdrop-blur-sm rounded-lg p-4 text-center border border-orange-400">
+            <div className="text-3xl font-bold text-white">{stats.pending}</div>
+            <div className="text-orange-200 text-sm">Pendentes</div>
+          </div>
+        </div>
+
+        <div className="bg-gray-900 bg-opacity-50 backdrop-blur-sm p-6 border-t border-b border-gray-700">
+          <div className="flex flex-col md:flex-row gap-3">
+            <input
+              type="text"
+              value={gameName}
+              onChange={(e) => setGameName(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && addGame()}
+              placeholder="Digite o nome do jogo..."
+              className="flex-1 px-4 py-3 bg-gray-800 text-white rounded-lg border-2 border-gray-700 focus:border-purple-500 focus:outline-none placeholder-gray-500"
+            />
+            <select
+              value={platform}
+              onChange={(e) => setPlatform(e.target.value)}
+              className="px-4 py-3 bg-gray-800 text-white rounded-lg border-2 border-gray-700 focus:border-purple-500 focus:outline-none"
+            >
+              {platforms.map(p => (
+                <option key={p} value={p}>{p}</option>
+              ))}
+            </select>
+            <button
+              onClick={addGame}
+              className="px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-semibold hover:from-purple-700 hover:to-blue-700 transition-all duration-200 flex items-center gap-2 justify-center shadow-lg hover:shadow-xl"
+            >
+              <Plus className="w-5 h-5" />
+              Adicionar
+            </button>
+          </div>
+        </div>
+
+        <div className="bg-gray-900 bg-opacity-50 backdrop-blur-sm p-4 flex justify-between items-center border-b border-gray-700">
+          <div className="flex gap-2">
+            <button
+              onClick={() => setFilter('all')}
+              className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                filter === 'all'
+                  ? 'bg-purple-600 text-white'
+                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+              }`}
+            >
+              Todos
+            </button>
+            <button
+              onClick={() => setFilter('pending')}
+              className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                filter === 'pending'
+                  ? 'bg-orange-600 text-white'
+                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+              }`}
+            >
+              Pendentes
+            </button>
+            <button
+              onClick={() => setFilter('completed')}
+              className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                filter === 'completed'
+                  ? 'bg-green-600 text-white'
+                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+              }`}
+            >
+              Finalizados
+            </button>
+          </div>
+          {games.length > 0 && (
+            <button
+              onClick={clearAll}
+              className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all text-sm font-medium"
+            >
+              Limpar Tudo
+            </button>
+          )}
+        </div>
+
+        <div className="bg-gray-900 bg-opacity-50 backdrop-blur-sm rounded-b-2xl p-6 min-h-[300px] shadow-2xl">
+          {filteredGames.length === 0 ? (
+            <div className="text-center py-12">
+              <Gamepad2 className="w-16 h-16 text-gray-600 mx-auto mb-4" />
+              <p className="text-gray-400 text-lg">
+                {games.length === 0
+                  ? 'Nenhum jogo cadastrado ainda'
+                  : 'Nenhum jogo nesta categoria'}
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {filteredGames.map(game => (
+                <div
+                  key={game.id}
+                  className={`flex items-center gap-4 p-4 rounded-lg border-2 transition-all duration-300 ${
+                    game.completed
+                      ? 'bg-green-900 bg-opacity-30 border-green-500'
+                      : 'bg-gray-800 border-gray-700 hover:border-purple-500'
+                  }`}
+                >
+                  <button
+                    onClick={() => toggleComplete(game.id)}
+                    className={`flex-shrink-0 w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all ${
+                      game.completed
+                        ? 'bg-green-600 border-green-500'
+                        : 'border-gray-600 hover:border-purple-500'
+                    }`}
+                  >
+                    {game.completed && <Check className="w-5 h-5 text-white" />}
+                  </button>
+
+                  <div className="flex-1">
+                    <h3
+                      className={`font-semibold text-lg ${
+                        game.completed
+                          ? 'text-gray-400 line-through'
+                          : 'text-white'
+                      }`}
+                    >
+                      {game.name}
+                    </h3>
+                    <div className="flex gap-3 mt-1">
+                      <span className="text-xs px-2 py-1 bg-purple-600 bg-opacity-50 text-purple-200 rounded">
+                        {game.platform}
+                      </span>
+                      <span className="text-xs text-gray-400">
+                        Adicionado em {game.addedAt}
+                      </span>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() => removeGame(game.id)}
+                    className="flex-shrink-0 p-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-all"
+                  >
+                    <Trash2 className="w-5 h-5" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="mt-4 text-center text-gray-400 text-sm">
+          Seus dados são salvos automaticamente
+        </div>
+      </div>
+    </div>
+  );
+}
